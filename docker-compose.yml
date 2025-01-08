@@ -1,0 +1,54 @@
+services:
+  postgres:
+    image: postgres
+    container_name: "capacita_postgres"
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    networks:
+      - postgres-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - ${DATABASE_PORT}:5432
+  redis:
+    image: redis:7-alpine
+    container_name: "hubsd_redis"
+    restart: unless-stopped
+    environment:
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+    ports:
+      - ${REDIS_PORT}:6379
+    volumes:
+      - redis-data:/var/lib/redis
+    networks:
+      - redis-net
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: "rabbitmq"
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: root
+      RABBITMQ_PORT: 5672
+      RABBITMQ_HOST: 15672
+    ports:
+      - 5672:5672
+      - "15672:15672"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - rabbitmq-network
+networks:
+  redis-net:
+    driver: bridge
+  postgres-network:
+  rabbitmq-network:
+    # external: true
+volumes:
+  redis-data:
+  postgres-data:
+  rabbitmq-data:

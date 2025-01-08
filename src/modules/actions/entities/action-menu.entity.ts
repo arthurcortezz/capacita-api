@@ -1,0 +1,61 @@
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Field, ObjectType } from '@nestjs/graphql';
+
+import { ActionEntity } from './action.entity';
+import { MenuEntity } from '../../menus/entities/menu.entity';
+import { PrivilegeEntity } from '../../menus/entities/privilege.entity';
+
+@Entity({ name: 'actions_menus' })
+@ObjectType()
+export class ActionMenuEntity {
+  @PrimaryGeneratedColumn()
+  @Field()
+  id?: number;
+
+  @Column({ name: 'action_id' })
+  @Field()
+  actionId: number;
+
+  @Column({ name: 'menu_id' })
+  @Field()
+  menuId: number;
+
+  @ManyToOne(() => MenuEntity, (menu) => menu.actionsMenus)
+  @JoinColumn({ name: 'menu_id' })
+  @Field(() => MenuEntity, { nullable: true })
+  menu?: MenuEntity;
+
+  @OneToOne(() => ActionEntity)
+  @JoinColumn({ name: 'action_id' })
+  @Field(() => ActionEntity, { nullable: true })
+  action?: ActionEntity;
+
+  @OneToMany(() => PrivilegeEntity, (privilege) => privilege.actionsMenus, {
+    cascade: true,
+  })
+  @Field(() => [PrivilegeEntity], { nullable: true })
+  privileges?: PrivilegeEntity[];
+
+  @CreateDateColumn({ name: 'created_at' })
+  @Field()
+  createdAt?: Date;
+
+  @UpdateDateColumn({ name: 'updated_at' })
+  @Field()
+  updatedAt?: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  @Field()
+  deletedAt?: Date;
+}

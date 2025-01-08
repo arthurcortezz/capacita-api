@@ -1,0 +1,263 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ActionEntity {
+  id: Float!
+  name: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type MenuEntity {
+  id: Float!
+  name: String
+  route: String
+  menuKey: String
+  icon: String
+  actionsMenus: [ActionMenuEntity!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
+type PrivilegeEntity {
+  id: Float!
+  roleId: Float!
+  actionMenuId: Float!
+  actionsMenus: ActionMenuEntity
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
+type ActionMenuEntity {
+  id: Float!
+  actionId: Float!
+  menuId: Float!
+  menu: MenuEntity
+  action: ActionEntity
+  privileges: [PrivilegeEntity!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
+type MenuPaginateEntity {
+  rows: [MenuEntity!]!
+  count: Float!
+}
+
+type RoleEntity {
+  id: Float!
+  name: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
+type RolePaginateEntity {
+  rows: [RoleEntity!]!
+  count: Float!
+}
+
+type StateEntity {
+  id: Float
+  name: String
+  uf: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type CompanyEntity {
+  id: Float!
+  uuid: String
+  name: String
+  socialReason: String
+  cnpj: String
+  phone: String
+  email: String
+  address: CompanyAddressEntity
+  users: [UserEntity!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
+type CompanyAddressEntity {
+  id: Float!
+  street: String
+  number: String
+  complement: String
+  neighborhood: String
+  cep: String
+  cityId: Float
+  companyId: Float
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
+type CityEntity {
+  id: Float
+  name: String
+  stateId: Float
+  state: StateEntity
+  userAddress: UserAddressEntity
+  companyAddress: CompanyAddressEntity
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type UserAddressEntity {
+  id: Float!
+  street: String
+  number: String
+  complement: String
+  neighborhood: String
+  cep: String
+  cityId: Float
+  userId: Float
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
+type UserEntity {
+  id: Float!
+  name: String
+  email: String
+  personType: String
+  identificationNumber: String
+  phone: String
+  plan: String
+  password: String
+  roleId: Float
+  role: RoleEntity
+  companyId: Float
+  company: CompanyEntity
+  rememberToken: String!
+  resetPasswordAt: DateTime!
+  acceptedAt: DateTime
+  address: UserAddressEntity
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
+type UserPaginateEntity {
+  rows: [UserEntity!]!
+  count: Float!
+}
+
+type ActionPaginateEntity {
+  rows: [ActionEntity!]!
+  count: Float!
+}
+
+type CompanyPaginateEntity {
+  rows: [CompanyEntity!]!
+  count: Float!
+}
+
+type ParameterEntity {
+  id: Float
+  key: String
+  value: String
+  description: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}
+
+type ParameterPaginateEntity {
+  rows: [ParameterEntity!]!
+  count: Float!
+}
+
+type Query {
+  parameters(filters: ParameterFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): ParameterPaginateEntity!
+  parameter(id: Float!): ParameterEntity!
+  companies(filters: CompanyFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): CompanyPaginateEntity!
+  company(id: Float!): CompanyEntity!
+  actions(filters: ActionFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): ActionPaginateEntity!
+  cities(filters: CityFiltersInput!): [CityEntity!]!
+  city(id: Float!): CityEntity!
+  states(filters: StateFiltersInput!): [StateEntity!]!
+  state(id: Float!): StateEntity!
+  users(filters: UserFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): UserPaginateEntity!
+  user(id: Float!): UserEntity!
+  consultants(filters: UserFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): UserPaginateEntity!
+  roles(filters: RoleFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): RolePaginateEntity!
+  role(id: Float!): RoleEntity!
+  menus(filters: MenuFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): MenuPaginateEntity!
+}
+
+input ParameterFiltersInput {
+  id: Float
+  key: String
+  value: String
+  description: String
+}
+
+input SortInput {
+  field: String
+  sort: String
+}
+
+input PaginatorInput {
+  perPage: Float
+  pageNumber: Float
+}
+
+input CompanyFiltersInput {
+  id: Float
+  name: String
+}
+
+input ActionFiltersInput {
+  id: Float
+  name: String
+}
+
+input CityFiltersInput {
+  id: Float
+  name: String
+  stateId: Float
+}
+
+input StateFiltersInput {
+  id: Float
+  name: String
+}
+
+input UserFiltersInput {
+  id: Float
+  name: String
+  email: String
+  roleId: Float
+  companyId: Float
+  company: CompanyFiltersInput
+  role: RoleFiltersInput
+}
+
+input RoleFiltersInput {
+  id: Float
+  name: String
+}
+
+input MenuFiltersInput {
+  id: Float
+  name: String
+  route: String
+  icon: String
+  menuKey: String
+}
