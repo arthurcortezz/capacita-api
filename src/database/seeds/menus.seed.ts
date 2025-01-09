@@ -61,6 +61,12 @@ export class MenusSeed implements Seeder {
         icon: "mat_outline:settings",
         menuKey: "parameters",
       },
+      {
+        name: "Cursos",
+        route: "courses",
+        icon: "uil:courses",
+        menuKey: "courses",
+      },
     ]);
   }
 }

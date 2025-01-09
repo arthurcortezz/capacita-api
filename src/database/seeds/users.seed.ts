@@ -8,8 +8,7 @@ import { UserAddressEntity } from "../../modules/users/entities/user-address.ent
 
 export class UsersSeed implements Seeder {
   public async run(dataSource: DataSource): Promise<any> {
-    const password =
-      "$2a$12$0AI1673xoHjn7nD55DJAfOLjYY0fDAqH1bYwRnfejtFVS7wOgVVqy";
+    const password = "$2a$10$YgzIpypZRX2BliFVs2BI1.HYGlObf4pj2KJ1rQYbsJogXyWq28UUW";
 
     const repository = dataSource.getRepository(UserEntity);
 
@@ -19,7 +18,7 @@ export class UsersSeed implements Seeder {
     const users = [
       {
         name: "Administrador",
-        email: "adm@softbase.com",
+        email: "adm@gmail.com",
         password,
         personType: PersonTypeEnum.FISICA,
         identificationNumber: "12345678909",
@@ -31,8 +30,7 @@ export class UsersSeed implements Seeder {
     ];
 
     await repository.insert(users);
-    const addressRepository =
-      dataSource.getRepository(UserAddressEntity);
+    const addressRepository = dataSource.getRepository(UserAddressEntity);
     await addressRepository.insert([
       {
         street: "Rua Escalas Musicais",

@@ -12,6 +12,7 @@ import { UsersModule } from "../modules/users/users.module";
 import { CitiesModule } from "../modules/cities/cities.module";
 import { StatesModule } from "../modules/states/states.module";
 import { ActionsModule } from "../modules/actions/actions.module";
+import { CoursesModule } from "../modules/courses/courses.module";
 import { CompaniesModule } from "../modules/companies/companies.module";
 import { DashboardModule } from "../modules/dashboard/dashboard.module";
 import { ParametersModule } from "../modules/parameters/parameters.module";
@@ -26,6 +27,7 @@ import { AuthenticationModule } from "../modules/authentication/authentication.m
     StatesModule,
     CitiesModule,
     ActionsModule,
+    CoursesModule,
     CompaniesModule,
     DashboardModule,
     ParametersModule,

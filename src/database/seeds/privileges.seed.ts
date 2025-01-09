@@ -69,6 +69,15 @@ export class PrivilegesSeed implements Seeder {
       { actionMenuId: 43, roleId: 1 },
       { actionMenuId: 44, roleId: 1 },
       { actionMenuId: 45, roleId: 1 },
+
+      //PARÂMETROS DO SISTEMA
+      { actionMenuId: 46, roleId: 1 },
+      { actionMenuId: 47, roleId: 1 },
+      { actionMenuId: 48, roleId: 1 },
+      { actionMenuId: 49, roleId: 1 },
+      { actionMenuId: 50, roleId: 1 },
+      { actionMenuId: 46, roleId: 2 },
+      { actionMenuId: 50, roleId: 2 },
     ]);
   }
 }

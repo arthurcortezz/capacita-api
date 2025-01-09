@@ -13,6 +13,7 @@ import { TermServiceEntity } from "../../modules/terms-service/entities/term-ser
 import { CompanyAddressEntity } from "../../modules/companies/entities/company-address.entity";
 import { ViewMenuByUserRolesEntity } from "../../modules/authentication/entities/view-menu-by-user-roles.entity";
 import { ViewPrivilegesByUserRolesEntity } from "../../modules/authentication/entities/view-privileges-by-user-roles.entity";
+import { CourseEntity } from "src/modules/courses/entities/course.entity";
 
 export const entities = [
   ActionEntity,
@@ -30,4 +31,5 @@ export const entities = [
   UserAddressEntity,
   ViewMenuByUserRolesEntity,
   ViewPrivilegesByUserRolesEntity,
+  CourseEntity,
 ];

@@ -183,6 +183,15 @@ type ParameterPaginateEntity {
   count: Float!
 }
 
+type CourseEntity {
+  id: Float!
+  name: String
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
 type Query {
   parameters(filters: ParameterFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): ParameterPaginateEntity!
   parameter(id: Float!): ParameterEntity!
