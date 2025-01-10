@@ -14,12 +14,12 @@ import { GraphqlAuthGuard } from "../../shared/guards/graphql-auth.guard";
 
 @Resolver(() => CourseEntity)
 @UseGuards(GraphqlAuthGuard)
-export class RolesResolver {
+export class CoursesResolver {
   constructor(private readonly service: CoursesService) {}
 
   @Roles("COURSES_LISTAR")
   @Query(() => CoursePaginateEntity)
-  async roles(
+  async courses(
     @Args("filters") filters: CourseFiltersInput,
     @Args("sort") sort: SortInput,
     @Args("paginator") paginator: PaginatorInput

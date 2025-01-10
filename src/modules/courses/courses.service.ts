@@ -18,15 +18,14 @@ import { PaginatorInterface } from "../../shared/interfaces/paginator.interface"
 export class CoursesService {
   constructor(
     @InjectRepository(CourseEntity)
-    private readonly rolesRepository: Repository<CourseEntity>
+    private readonly coursesRepository: Repository<CourseEntity>
   ) {}
 
   async findAll(filters?: CourseFilterInterface): Promise<CourseInterface[]> {
     try {
       const where = createFilters(filters);
-      return await this.rolesRepository.find({ where, order: { name: "ASC" } });
+      return await this.coursesRepository.find({ where, order: { name: "ASC" } });
     } catch (error) {
-      console.log("🚀 ~ CoursesService ~ findAll ~ error:", error);
       throw new HttpException({ message: "Não foi possível encontrar os cursos." }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
@@ -41,7 +40,7 @@ export class CoursesService {
       const order = createOrder(sort);
 
       const where = createFilters(filters);
-      const [rows, count] = await this.rolesRepository.findAndCount({
+      const [rows, count] = await this.coursesRepository.findAndCount({
         where,
         order,
         skip,
@@ -49,14 +48,13 @@ export class CoursesService {
       });
       return { rows, count };
     } catch (error) {
-      console.log("🚀 ~ CoursesService ~ error:", error);
       throw new HttpException({ message: "Não foi possível encontrar os cursos." }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   async findOne(id: number): Promise<CourseInterface> {
     try {
-      return await this.rolesRepository.findOneOrFail({ where: { id } });
+      return await this.coursesRepository.findOneOrFail({ where: { id } });
     } catch (error) {
       throw new HttpException({ message: "Não foi possível encontrar o curso." }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -64,7 +62,7 @@ export class CoursesService {
 
   async courseIdExist(courseId: number): Promise<CourseInterface> {
     try {
-      return await this.rolesRepository.findOne({
+      return await this.coursesRepository.findOne({
         where: {
           id: courseId,
           deletedAt: null,
@@ -79,7 +77,7 @@ export class CoursesService {
   async findByName(name: string, data: CourseInterface): Promise<CourseInterface> {
     try {
       const id = data.id || 0;
-      return await this.rolesRepository.findOne({
+      return await this.coursesRepository.findOne({
         select: ["name"],
         where: {
           name,
@@ -91,12 +89,13 @@ export class CoursesService {
     }
   }
 
-  async create(data: CourseCreateDto): Promise<{ role: CourseInterface; message: string }> {
+  async create(data: CourseCreateDto): Promise<{ course: CourseInterface; message: string }> {
     try {
       const entity = Object.assign(new CourseEntity(), data);
-      const role = await this.rolesRepository.save(entity);
+      entity.status = "Ativo";
+      const course = await this.coursesRepository.save(entity);
 
-      return { role, message: "O curso foi criado com sucesso." };
+      return { course, message: "O curso foi criado com sucesso." };
     } catch (error) {
       throw new HttpException({ message: "Não foi possível criar o curso." }, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -105,9 +104,9 @@ export class CoursesService {
   async update(id: number, body: CourseUpdateDto): Promise<{ role: CourseInterface; message: string }> {
     try {
       const entity = Object.assign(new CourseEntity(), { id, ...body });
-      await this.rolesRepository.save({ id, ...entity });
+      await this.coursesRepository.save({ id, ...entity });
 
-      const role = await this.rolesRepository.findOne({ where: { id } });
+      const role = await this.coursesRepository.findOne({ where: { id } });
       return {
         role,
         message: "O curso foi atualizado com sucesso.",
@@ -130,7 +129,7 @@ export class CoursesService {
         );
       }
 
-      await this.rolesRepository.softDelete(id);
+      await this.coursesRepository.softDelete(id);
       return { message: "O curso foi removido com sucesso." };
     } catch (error) {
       if (error instanceof HttpException) {

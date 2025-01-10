@@ -28,6 +28,14 @@ export class CreateTableCourses1702296908519 implements MigrationInterface {
         type: "varchar",
       },
       {
+        name: "image",
+        type: "varchar",
+      },
+      {
+        name: "duration",
+        type: "varchar",
+      },
+      {
         name: "created_at",
         type: "timestamp",
         default: "now()",

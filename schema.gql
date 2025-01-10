@@ -158,6 +158,24 @@ type UserPaginateEntity {
   count: Float!
 }
 
+type CourseEntity {
+  id: Float!
+  name: String
+  description: String
+  image: String
+  status: String
+  value: String
+  duration: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
+type CoursePaginateEntity {
+  rows: [CourseEntity!]!
+  count: Float!
+}
+
 type ActionPaginateEntity {
   rows: [ActionEntity!]!
   count: Float!
@@ -183,20 +201,13 @@ type ParameterPaginateEntity {
   count: Float!
 }
 
-type CourseEntity {
-  id: Float!
-  name: String
-  description: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  deletedAt: DateTime!
-}
-
 type Query {
   parameters(filters: ParameterFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): ParameterPaginateEntity!
   parameter(id: Float!): ParameterEntity!
   companies(filters: CompanyFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): CompanyPaginateEntity!
   company(id: Float!): CompanyEntity!
+  courses(filters: CourseFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): CoursePaginateEntity!
+  role(id: Float!): RoleEntity!
   actions(filters: ActionFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): ActionPaginateEntity!
   cities(filters: CityFiltersInput!): [CityEntity!]!
   city(id: Float!): CityEntity!
@@ -206,7 +217,6 @@ type Query {
   user(id: Float!): UserEntity!
   consultants(filters: UserFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): UserPaginateEntity!
   roles(filters: RoleFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): RolePaginateEntity!
-  role(id: Float!): RoleEntity!
   menus(filters: MenuFiltersInput!, sort: SortInput!, paginator: PaginatorInput!): MenuPaginateEntity!
 }
 
@@ -228,6 +238,11 @@ input PaginatorInput {
 }
 
 input CompanyFiltersInput {
+  id: Float
+  name: String
+}
+
+input CourseFiltersInput {
   id: Float
   name: String
 }

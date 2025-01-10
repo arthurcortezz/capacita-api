@@ -63,7 +63,7 @@ export class MenusSeed implements Seeder {
       },
       {
         name: "Cursos",
-        route: "courses",
+        route: "cursos",
         icon: "uil:courses",
         menuKey: "courses",
       },

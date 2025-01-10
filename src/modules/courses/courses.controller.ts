@@ -40,7 +40,7 @@ export class CoursesController {
   @Post()
   @CreateRole()
   @Roles("COURSES_CRIAR")
-  async create(@Body() data: CourseCreateDto): Promise<{ role: CourseInterface; message: string }> {
+  async create(@Body() data: CourseCreateDto): Promise<{ course: CourseInterface; message: string }> {
     return this.service.create(data);
   }
 
