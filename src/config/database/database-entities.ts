@@ -5,6 +5,7 @@ import { CityEntity } from "../../modules/cities/entities/city.entity";
 import { StateEntity } from "../../modules/states/entities/state.entity";
 import { CourseEntity } from "../../modules/courses/entities/course.entity";
 import { ActionEntity } from "../../modules/actions/entities/action.entity";
+import { LessonEntity } from "../../modules/lessons/entities/lesson.entity";
 import { PrivilegeEntity } from "../../modules/menus/entities/privilege.entity";
 import { CompanyEntity } from "../../modules/companies/entities/company.entity";
 import { ParameterEntity } from "../../modules/parameters/entities/parameter.entity";
@@ -32,4 +33,5 @@ export const entities = [
   ViewMenuByUserRolesEntity,
   ViewPrivilegesByUserRolesEntity,
   CourseEntity,
+  LessonEntity,
 ];

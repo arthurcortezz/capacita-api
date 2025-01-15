@@ -1,5 +1,7 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+
+import { LessonEntity } from "../../lessons/entities/lesson.entity";
 
 @Entity({ name: "courses" })
 @ObjectType()
@@ -24,13 +26,17 @@ export class CourseEntity {
   @Field({ nullable: true })
   status: string;
 
-  @Column()
-  @Field({ nullable: true })
-  value: string;
+  @Column("decimal", { precision: 10, scale: 2 }) // Valor monetário
+  @Field()
+  value: number;
 
   @Column()
   @Field({ nullable: true })
   duration: string;
+
+  @OneToMany(() => LessonEntity, (lesson) => lesson.course)
+  @Field(() => [LessonEntity], { nullable: true })
+  lessons?: LessonEntity[];
 
   @CreateDateColumn({ name: "created_at" })
   @Field()

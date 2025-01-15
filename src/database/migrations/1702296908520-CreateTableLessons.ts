@@ -1,8 +1,8 @@
-import { Table, QueryRunner, MigrationInterface } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
-export class CreateTableCourses1702296908519 implements MigrationInterface {
+export class CreateTableLessons1702296908520 implements MigrationInterface {
   private table = new Table({
-    name: "courses",
+    name: "lessons",
     columns: [
       {
         name: "id",
@@ -12,31 +12,21 @@ export class CreateTableCourses1702296908519 implements MigrationInterface {
         generationStrategy: "increment",
       },
       {
-        name: "name",
+        name: "course_id",
+        type: "int",
+      },
+      {
+        name: "order",
+        type: "int",
+      },
+      {
+        name: "title",
         type: "varchar",
       },
       {
-        name: "description",
+        name: "pdfUrl",
         type: "varchar",
-      },
-      {
-        name: "status",
-        type: "varchar",
-      },
-      {
-        name: "value",
-        type: "decimal",
-        precision: 10,
-        scale: 2,
         isNullable: false,
-      },
-      {
-        name: "image",
-        type: "varchar",
-      },
-      {
-        name: "duration",
-        type: "varchar",
       },
       {
         name: "created_at",
@@ -56,11 +46,20 @@ export class CreateTableCourses1702296908519 implements MigrationInterface {
     ],
   });
 
+  private foreignKey = new TableForeignKey({
+    columnNames: ["course_id"],
+    referencedTableName: "courses",
+    referencedColumnNames: ["id"],
+    onDelete: "CASCADE",
+  });
+
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(this.table);
+    await queryRunner.createForeignKey("lessons", this.foreignKey);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropForeignKey("lessons", this.foreignKey);
     await queryRunner.dropTable(this.table);
   }
 }

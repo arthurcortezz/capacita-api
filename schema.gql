@@ -158,14 +158,27 @@ type UserPaginateEntity {
   count: Float!
 }
 
+type LessonEntity {
+  id: Float!
+  order: Float!
+  title: String!
+  pdf_url: String!
+  courseId: Float
+  course: CourseEntity!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deletedAt: DateTime!
+}
+
 type CourseEntity {
   id: Float!
   name: String
   description: String
   image: String
   status: String
-  value: String
+  value: Float!
   duration: String
+  lessons: [LessonEntity!]
   createdAt: DateTime!
   updatedAt: DateTime!
   deletedAt: DateTime!

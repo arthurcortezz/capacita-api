@@ -1,8 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Transform, TransformFnParams } from "class-transformer";
-import { Validate, IsString, IsNotEmpty, MinLength, MaxLength } from "class-validator";
+import { Validate, IsString, IsNotEmpty, MinLength, MaxLength, IsOptional } from "class-validator";
 
 import { CourseNameAlreadyExistConstraint } from "../validate/course-name-already-exist.constraint";
+import { CourseLessonsDto } from "./course-lessons.dto";
 
 export class CourseCreateDto {
   @ApiProperty()
@@ -45,16 +46,15 @@ export class CourseCreateDto {
   image: string;
 
   @ApiProperty()
-  @IsString({ message: "O campo de preço precisa ser uma string." })
   @IsNotEmpty({ message: "O campo de preço é obrigátorio." })
-  @MinLength(3, {
-    message: "O campo de preço precisa ter pelo menos 3 caracteres.",
-  })
-  @MaxLength(50, {
-    message: "O campo de preço pode ter no máximo 50 caracteres.",
-  })
   value: string;
 
   @ApiProperty()
   status: string;
+
+  @ApiProperty({
+    type: () => CourseLessonsDto,
+  })
+  @IsOptional()
+  lessons?: CourseLessonsDto[];
 }

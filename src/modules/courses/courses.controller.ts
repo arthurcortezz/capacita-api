@@ -1,23 +1,35 @@
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
-import { Get, Put, Post, Body, Param, Delete, UseGuards, Controller, ParseIntPipe, UseInterceptors } from "@nestjs/common";
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import {
+  Get,
+  Put,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UseGuards,
+  Controller,
+  ParseIntPipe,
+  UseInterceptors,
+} from '@nestjs/common';
 
-import { CoursesService } from "./courses.service";
-import { CourseCreateDto } from "./dtos/course-create.dto";
-import { CourseUpdateDto } from "./dtos/course-update.dto";
-import { CourseInterface } from "./interfaces/course.interface";
-import { Roles } from "../../shared/decorators/role.decorator";
-import { CourseIdExistPipe } from "./validate/course-id-exist.pipe";
-import { JWTAuthGuard } from "../../shared/guards/jwt-auth.guard";
-import { FindRole } from "../../shared/docs/roles/find-role.docs";
-import { RemoveRole } from "../../shared/docs/roles/remove-role.docs";
-import { CreateRole } from "../../shared/docs/roles/create-role.docs";
-import { UpdateRole } from "../../shared/docs/roles/update-role.docs";
-import { FindAllRoles } from "../../shared/docs/roles/find-all-roles.docs";
-import { HasAgreedTermServiceInterceptor } from "../../shared/interceptors/has-agreed-term-service.interceptor";
+import { CoursesService } from './courses.service';
+import { CourseCreateDto } from './dtos/course-create.dto';
+import { CourseUpdateDto } from './dtos/course-update.dto';
+import { CourseInterface } from './interfaces/course.interface';
+import { Roles } from '../../shared/decorators/role.decorator';
+import { CourseIdExistPipe } from './validate/course-id-exist.pipe';
+import { JWTAuthGuard } from '../../shared/guards/jwt-auth.guard';
+import { FindRole } from '../../shared/docs/roles/find-role.docs';
+import { RemoveRole } from '../../shared/docs/roles/remove-role.docs';
+import { CreateRole } from '../../shared/docs/roles/create-role.docs';
+import { UpdateRole } from '../../shared/docs/roles/update-role.docs';
+import { FindAllRoles } from '../../shared/docs/roles/find-all-roles.docs';
+import { HasAgreedTermServiceInterceptor } from '../../shared/interceptors/has-agreed-term-service.interceptor';
+import { LessonEntity } from '../lessons/entities/lesson.entity';
 
-@ApiTags("Cursos")
+@ApiTags('Cursos')
 @ApiBearerAuth()
-@Controller("courses")
+@Controller('courses')
 @UseGuards(JWTAuthGuard)
 @UseInterceptors(HasAgreedTermServiceInterceptor)
 export class CoursesController {
@@ -25,39 +37,54 @@ export class CoursesController {
 
   @Get()
   @FindAllRoles()
-  @Roles("COURSES_LISTAR")
+  @Roles('COURSES_LISTAR')
   async getAll(): Promise<CourseInterface[]> {
     return this.service.findAll();
   }
 
-  @Get(":id")
+  @Get(':id')
   @FindRole()
-  @Roles("COURSES_LISTAR")
-  async findOne(@Param("id", ParseIntPipe, CourseIdExistPipe) id: number): Promise<CourseInterface> {
+  @Roles('COURSES_LISTAR')
+  async findOne(
+    @Param('id', ParseIntPipe, CourseIdExistPipe) id: number
+  ): Promise<CourseInterface> {
     return this.service.findOne(id);
+  }
+
+  @Get('lessons/:id')
+  @FindRole()
+  @Roles('COURSES_LISTAR')
+  async findLesson(
+    @Param('id', ParseIntPipe) id: number
+  ): Promise<LessonEntity> {
+    return this.service.findLesson(id);
   }
 
   @Post()
   @CreateRole()
-  @Roles("COURSES_CRIAR")
-  async create(@Body() data: CourseCreateDto): Promise<{ course: CourseInterface; message: string }> {
+  @Roles('COURSES_CRIAR')
+  async create(
+    @Body() data: CourseCreateDto
+  ): Promise<{ course: CourseInterface; message: string }> {
     return this.service.create(data);
   }
 
-  @Put(":id")
+  @Put(':id')
   @UpdateRole()
-  @Roles("COURSES_MODIFICAR")
+  @Roles('COURSES_MODIFICAR')
   async update(
-    @Param("id", ParseIntPipe, CourseIdExistPipe) id: number,
+    @Param('id', ParseIntPipe, CourseIdExistPipe) id: number,
     @Body() data: CourseUpdateDto
-  ): Promise<{ role: CourseInterface; message: string }> {
+  ): Promise<{ course: CourseInterface; message: string }> {
     return this.service.update(id, data);
   }
 
-  @Delete(":id")
+  @Delete(':id')
   @RemoveRole()
-  @Roles("COURSES_REMOVER")
-  async delete(@Param("id", ParseIntPipe, CourseIdExistPipe) id: number): Promise<{ message: string }> {
+  @Roles('COURSES_REMOVER')
+  async delete(
+    @Param('id', ParseIntPipe, CourseIdExistPipe) id: number
+  ): Promise<{ message: string }> {
     return this.service.delete(id);
   }
 }
