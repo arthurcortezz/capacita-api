@@ -146,6 +146,7 @@ export class CoursesService {
           lesson.title = lessonData.title;
           lesson.order = lessonData.order;
           lesson.pdfUrl = lessonData.pdfUrl;
+          lesson.type = lessonData.type;
           lesson.course = course;
           return lesson;
         });
@@ -184,6 +185,7 @@ export class CoursesService {
           lesson.title = lessonData.title;
           lesson.order = lessonData.order;
           lesson.pdfUrl = lessonData.pdfUrl;
+          lesson.type = lessonData.type;
           lesson.course = course;
           return lesson;
         });

@@ -1,13 +1,13 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   ManyToOne,
+  JoinColumn,
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  JoinColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 import { CourseEntity } from '../../courses/entities/course.entity';
@@ -22,6 +22,10 @@ export class LessonEntity {
   @Column()
   @Field()
   order: number;
+
+  @Column()
+  @Field()
+  type: string;
 
   @Column()
   @Field()

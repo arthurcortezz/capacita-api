@@ -8,6 +8,11 @@ export class CourseLessonsDto {
   title: string;
 
   @ApiProperty()
+  @IsString({ message: 'O tipo precisa ser uma string.' })
+  @IsNotEmpty({ message: 'O tipo da aula é obrigatório.' })
+  type: string;
+
+  @ApiProperty()
   @IsString({ message: 'O conteúdo precisa ser uma string.' })
   @IsNotEmpty({ message: 'O conteúdo da aula é obrigatório.' })
   pdfUrl: string;

@@ -20,6 +20,11 @@ export class CreateTableLessons1702296908520 implements MigrationInterface {
         type: "int",
       },
       {
+        name: "type",
+        type: "varchar",
+        isNullable: false,
+      },
+      {
         name: "title",
         type: "varchar",
       },

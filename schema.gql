@@ -161,6 +161,7 @@ type UserPaginateEntity {
 type LessonEntity {
   id: Float!
   order: Float!
+  type: String!
   title: String!
   pdf_url: String!
   courseId: Float
